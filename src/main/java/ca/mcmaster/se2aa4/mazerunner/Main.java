@@ -5,32 +5,64 @@ import java.io.File;
 import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.cli.*;
 
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
+    private static final CommandLineParser parser = new DefaultParser();
+
+    private static String filepath;
+
+    public static Options getOptions() {
+        Options options = new Options();
+        Option customMap = Option.builder("i")
+            .argName("Custom Map")
+            .hasArg(true)
+            .required(true)
+            .desc("set custom map file").build();
+        options.addOption(customMap);
+        return options;
+    }
+
+    public static void parseCommandLine(Options options, String[] args) {
+        CommandLine cmd;
+        CommandLineParser parser = new DefaultParser();
+        try {
+            cmd = parser.parse(options,args);
+            if (cmd.hasOption("i")) {
+                logger.info("-i flag recieved");
+                filepath = cmd.getOptionValue("i");
+            }
+        } catch (ParseException e) {
+            logger.error(e.getMessage());
+        }
+    }
 
     public static void main(String[] args) {
-        System.out.println("** Starting Maze Runner");
+        Options options = getOptions();
+        parseCommandLine(options, args);
+
+        logger.info("** Starting Maze Runner");
         try {
-            System.out.println("**** Reading the maze from file " + args[0]);
-            BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+            logger.info("**** Reading the maze from file " + filepath);
+            BufferedReader reader = new BufferedReader(new FileReader(filepath));
             String line;
             while ((line = reader.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
                     if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
+                        logger.trace("WALL ");
                     } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
+                        logger.trace("PASS ");
                     }
                 }
-                System.out.print(System.lineSeparator());
+                logger.info(System.lineSeparator());
             }
         } catch(Exception e) {
-            System.err.println("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occured /!\\");
         }
-        System.out.println("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
-        System.out.println("** End of MazeRunner");
+        logger.info("**** Computing path");
+        logger.error("PATH NOT COMPUTED");
+        logger.info("** End of MazeRunner");
     }
 }
