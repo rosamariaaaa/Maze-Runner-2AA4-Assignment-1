@@ -12,6 +12,10 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
     private static final CommandLineParser parser = new DefaultParser();
 
+    private Maze maze;
+    private Traverser pathfinder;
+    private Path path;
+
     private static String filepath;
 
     public static Options getOptions() {
@@ -44,23 +48,7 @@ public class Main {
         parseCommandLine(options, args);
 
         logger.info("** Starting Maze Runner");
-        try {
-            logger.info("**** Reading the maze from file " + filepath);
-            BufferedReader reader = new BufferedReader(new FileReader(filepath));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.trace("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.trace("PASS ");
-                    }
-                }
-                logger.info(System.lineSeparator());
-            }
-        } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
-        }
+
         logger.info("**** Computing path");
         logger.error("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
