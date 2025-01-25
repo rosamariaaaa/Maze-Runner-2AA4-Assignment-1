@@ -20,7 +20,7 @@ public class Main {
         Options options = getOptions();
         String filepath = getMazeFile(options, args);
         this.maze = new Maze(filepath);
-        this.pathfinder = new Traverser();
+        this.pathfinder = new Traverser(maze.getStart());
     }
 
     public void startMazeRunner() {

@@ -23,6 +23,19 @@ public class Maze {
         this.maze = enumerateMaze();
     }
 
+    public int getStart() {
+        for (int i = 0; i < width; i++) {
+            if (maze[0][i] == 'p') {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getFinish() {
+        return width-1;
+    }
+
     /**
      * Return the height of the maze
      */

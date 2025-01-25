@@ -6,12 +6,10 @@ public class Traverser {
     private int yPos;
     private Movement movement;
 
-    public Traverser() {
-
-    }
-
-    public boolean isAtFinish(int width) {
-        return xPos == width;
+    public Traverser(int yStart) {
+        this.xPos = 0;
+        this.yPos = yStart;
+        this.movement = new Right();
     }
 
     public void nextMove() {
