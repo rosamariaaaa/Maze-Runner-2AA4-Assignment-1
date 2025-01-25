@@ -16,9 +16,11 @@ public class Maze {
     private static final Logger logger = LogManager.getLogger();
 
     public Maze (String filepath) {
+        logger.info("Instantiating Maze");
         this.filepath = filepath;
         this.height = getHeight();
         this.width = getWidth();
+        this.maze = enumerateMaze();
     }
 
     /**
@@ -59,26 +61,31 @@ public class Maze {
     /**
      * Read the maze from the file path.
      */
-    private void enumerateMaze(String filepath) {
+    private char[][] enumerateMaze() {
+        char[][] mazeArray = new char[width][height];
+
         try {
             logger.info("**** Reading the maze from file " + this.filepath);
             BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
             String line;
             
+            int row = 0;
             while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        logger.trace("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        logger.trace("PASS ");
+                for (int col = 0; col < line.length(); col++) {
+                    if (line.charAt(col) == '#') {
+                        logger.info("WALL ");
+                        mazeArray[row][col] = 'w';
+                    } else if (line.charAt(col) == ' ') {
+                        logger.info("PASS ");
+                        mazeArray[row][col] = 'p';
                     }
                 }
+                row++;
                 logger.info(System.lineSeparator());
             }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
-
+        return mazeArray;
     }
-
 }
