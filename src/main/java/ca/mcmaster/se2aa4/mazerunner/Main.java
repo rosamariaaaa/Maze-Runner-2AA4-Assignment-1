@@ -24,7 +24,12 @@ public class Main {
 
     public void startMazeRunner() {
         logger.info("**** Computing path");
-        logger.error("PATH NOT COMPUTED");
+        while (pathfinder.getX() != maze.getFinish()) {
+            char next = pathfinder.findNextMove(maze);
+            pathfinder.nextMove(next);
+        }
+        String path = pathfinder.getPath();
+        logger.info("Path found: " + path);
         logger.info("** End of MazeRunner");
     }
 

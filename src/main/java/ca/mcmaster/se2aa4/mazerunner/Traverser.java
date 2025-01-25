@@ -14,9 +14,22 @@ public class Traverser {
 
     public Traverser(Maze maze, int yStart) {
         logger.info("Traverser instantiated: current coordinates (" + 0 + "," + yStart + ")"); 
+        this.path = new Path();
         this.xPos = 0;
         this.yPos = yStart;
         this.direction = 'R';
+    }
+
+    public String getPath() {
+        return path.getSequence();
+    }
+
+    public int getX() {
+        return xPos;
+    }
+
+    public int getY() {
+        return yPos;
     }
 
     public void nextMove(char step) {
@@ -35,7 +48,7 @@ public class Traverser {
     /**
      * Calculate and return next move
      */
-    private char findNextMove(Maze maze) {
+    public char findNextMove(Maze maze) {
         if (isForwardClear(maze)) {
             return 'F';
         }
@@ -69,6 +82,8 @@ public class Traverser {
      * Implemented based on the direction the user is facing.
      */
     public void moveForward() {
+        path.addStep('F');
+
         if (direction == 'R') {
             xPos++;
         }
@@ -88,6 +103,8 @@ public class Traverser {
      * Implemented based on the direction the user is facing.
      */
     public void turnLeft() {
+        path.addStep('L');
+
         if (direction == 'R') {
             direction = 'U';
         }
@@ -107,6 +124,8 @@ public class Traverser {
      * Implemented based on the direction the user is facing.
      */
     public void turnRight() {
+        path.addStep('R');
+
         if (direction == 'R') {
             direction = 'D';
         }

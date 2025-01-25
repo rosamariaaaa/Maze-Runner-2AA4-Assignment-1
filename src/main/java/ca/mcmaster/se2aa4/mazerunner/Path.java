@@ -15,6 +15,10 @@ public class Path {
         this.factorizedForm = "";
     }
 
+    public String getSequence() {
+        return sequence;
+    }
+
         /**
      * Create a new Path
      */
