@@ -25,7 +25,7 @@ public class Maze {
 
     public int getStart() {
         for (int i = 0; i < width; i++) {
-            if (maze[0][i] == 'p') {
+            if (maze[i][0] == 'p') {
                 return i;
             }
         }
