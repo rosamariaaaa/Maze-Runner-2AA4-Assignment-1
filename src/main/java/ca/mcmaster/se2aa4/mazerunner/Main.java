@@ -16,7 +16,18 @@ public class Main {
     private Traverser pathfinder;
     private Path path;
 
-    private static String filepath;
+    public Main(String args[]) {
+        Options options = getOptions();
+        String filepath = getMazeFile(options, args);
+        this.maze = new Maze(filepath);
+        this.pathfinder = new Traverser();
+    }
+
+    public void startMazeRunner() {
+        logger.info("**** Computing path");
+        logger.error("PATH NOT COMPUTED");
+        logger.info("** End of MazeRunner");
+    }
 
     public static Options getOptions() {
         Options options = new Options();
@@ -29,28 +40,23 @@ public class Main {
         return options;
     }
 
-    public static void parseCommandLine(Options options, String[] args) {
+    public String getMazeFile(Options options, String[] args) {
         CommandLine cmd;
         CommandLineParser parser = new DefaultParser();
         try {
             cmd = parser.parse(options,args);
             if (cmd.hasOption("i")) {
                 logger.info("-i flag recieved");
-                filepath = cmd.getOptionValue("i");
+                return cmd.getOptionValue("i");
             }
         } catch (ParseException e) {
-            logger.error(e.getMessage());
+            logger.error("Error. Map file not provided.");
         }
+        return null;
     }
 
     public static void main(String[] args) {
-        Options options = getOptions();
-        parseCommandLine(options, args);
-
-        logger.info("** Starting Maze Runner");
-
-        logger.info("**** Computing path");
-        logger.error("PATH NOT COMPUTED");
-        logger.info("** End of MazeRunner");
+        Main mazerunner = new Main(args);
+        mazerunner.startMazeRunner();
     }
 }
