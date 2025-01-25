@@ -23,6 +23,10 @@ public class Maze {
         this.maze = enumerateMaze();
     }
 
+    public char getSpace(int x, int y) {
+        return maze[x][y];
+    }
+
     public int getStart() {
         for (int i = 0; i < width; i++) {
             if (maze[i][0] == 'p') {

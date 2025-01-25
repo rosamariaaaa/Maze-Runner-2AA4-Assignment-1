@@ -14,13 +14,12 @@ public class Main {
 
     private Maze maze;
     private Traverser pathfinder;
-    private Path path;
 
     public Main(String args[]) {
         Options options = getOptions();
         String filepath = getMazeFile(options, args);
         this.maze = new Maze(filepath);
-        this.pathfinder = new Traverser(maze.getStart());
+        this.pathfinder = new Traverser(maze, maze.getStart());
     }
 
     public void startMazeRunner() {
