@@ -11,20 +11,49 @@ public class Maze {
 
     private String filepath;
     private char[][] maze;
-    private int length;
+    private int height;
     private int width;
     private static final Logger logger = LogManager.getLogger();
 
-    public Maze () {
-        
+    public Maze (String filepath) {
+        this.filepath = filepath;
+        this.height = getHeight();
+        this.width = getWidth();
     }
 
-    public int getLength() {
-        return 0;
+    /**
+     * Return the height of the maze
+     */
+    public int getHeight() {
+        try {
+            int count = 0;
+            BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
+            String line;
+                
+            while ((line = reader.readLine()) != null) {
+                count++;
+            }
+
+            return count;
+        } catch (Exception e) {
+            logger.error("/!\\ An error has occured /!\\");
+        }
+        return -1;
     }
 
+    /**
+     * Return the width of the maze
+     */
     public int getWidth() {
-        return 0;
+        // Read the first line of the maze. Return the length.
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
+            String line = reader.readLine();
+            return line.length();
+        } catch (Exception e) {
+            logger.error("/!\\ An error has occured /!\\");
+        }
+        return -1;
     }
 
     /**
@@ -32,8 +61,8 @@ public class Maze {
      */
     private void enumerateMaze(String filepath) {
         try {
-            logger.info("**** Reading the maze from file " + filepath);
-            BufferedReader reader = new BufferedReader(new FileReader(filepath));
+            logger.info("**** Reading the maze from file " + this.filepath);
+            BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
             String line;
             
             while ((line = reader.readLine()) != null) {
