@@ -27,17 +27,22 @@ public class Maze {
         return maze[x][y];
     }
 
-    public int getStart() {
+    public Coordinates getStart() {
         for (int i = 0; i < width; i++) {
             if (maze[i][0] == 'p') {
-                return i;
+                return new Coordinates(0, i);
             }
         }
-        return -1;
+        return null;
     }
 
-    public int getFinish() {
-        return width-1;
+    public Coordinates getFinish() {
+        for (int i = 0; i < width; i++) {
+            if (maze[i][0] == 'p') {
+                return new Coordinates(width-1, i);
+            }
+        }
+        return null;
     }
 
     /**

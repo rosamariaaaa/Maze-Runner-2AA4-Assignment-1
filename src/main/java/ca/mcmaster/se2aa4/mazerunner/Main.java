@@ -19,14 +19,13 @@ public class Main {
         Options options = getOptions();
         String filepath = getMazeFile(options, args);
         this.maze = new Maze(filepath);
-        this.pathfinder = new Traverser(maze, maze.getStart());
+        this.pathfinder = new Traverser(maze, maze.getStart(), new RightHandAlgorithm());
     }
 
     public void startMazeRunner() {
         logger.info("**** Computing path");
-        while (pathfinder.getX() != maze.getFinish()) {
-            char next = pathfinder.findNextMove(maze);
-            pathfinder.nextMove(next);
+        while (pathfinder.getCoordinates() != maze.getFinish()) {
+            pathfinder.move(maze);
         }
         String path = pathfinder.getPath();
         logger.info("Path found: " + path);
