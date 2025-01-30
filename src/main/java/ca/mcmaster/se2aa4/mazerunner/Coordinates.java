@@ -21,6 +21,10 @@ public class Coordinates {
         return y;
     }
 
+    public boolean isEqualTo(Coordinates coordinates) {
+        return this.x == coordinates.getX() && this.y == coordinates.getY();
+    }
+
     public void stepUp() {
         y--;
     }

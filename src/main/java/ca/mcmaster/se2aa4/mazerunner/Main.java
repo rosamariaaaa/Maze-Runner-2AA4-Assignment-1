@@ -24,7 +24,7 @@ public class Main {
 
     public void startMazeRunner() {
         logger.info("**** Computing path");
-        while (pathfinder.getCoordinates() != maze.getFinish()) {
+        while (!pathfinder.getCoordinates().isEqualTo(maze.getFinish())) {
             pathfinder.move(maze);
         }
         String path = pathfinder.getPath();

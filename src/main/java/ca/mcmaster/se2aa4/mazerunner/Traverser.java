@@ -20,8 +20,10 @@ public class Traverser {
     }
 
     public void move(Maze maze) {
+        logger.info("Move one step."); 
         char move = navigator.getNextMove(maze, coordinates, movement);
         path.addStep(move);
+        logger.info("Movement Complete: X: " + coordinates.getX() + " Y: " + coordinates.getY()); 
     }
 
     public String getPath() {

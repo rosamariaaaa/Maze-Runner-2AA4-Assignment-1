@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 public class RightHandAlgorithm extends MovementAlgorithm {
 
     public char getNextMove(Maze maze, Coordinates coords, MovementPattern direction) {
+        direction.moveForward(coords);
         return 'F';
     }
 
