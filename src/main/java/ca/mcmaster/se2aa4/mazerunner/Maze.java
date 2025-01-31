@@ -10,7 +10,7 @@ import org.apache.commons.cli.*;
 public class Maze {
 
     private String filepath;
-    private char[][] maze;
+    private Space[][] maze;
     private int height;
     private int width;
     private static final Logger logger = LogManager.getLogger();
@@ -23,13 +23,15 @@ public class Maze {
         this.maze = enumerateMaze();
     }
 
-    public char getSpace(int x, int y) {
+    public Space getSpace(Coordinates coordinates) {
+        int x = coordinates.getX();
+        int y = coordinates.getY();
         return maze[x][y];
     }
 
     public Coordinates getStart() {
         for (int i = 0; i < width; i++) {
-            if (maze[i][0] == 'p') {
+            if (maze[i][0] == Space.PASS) {
                 return new Coordinates(0, i);
             }
         }
@@ -38,7 +40,7 @@ public class Maze {
 
     public Coordinates getFinish() {
         for (int i = 0; i < width; i++) {
-            if (maze[i][0] == 'p') {
+            if (maze[i][0] == Space.PASS) {
                 return new Coordinates(width-1, i);
             }
         }
@@ -83,8 +85,8 @@ public class Maze {
     /**
      * Read the maze from the file path.
      */
-    private char[][] enumerateMaze() {
-        char[][] mazeArray = new char[width][height];
+    private Space[][] enumerateMaze() {
+        Space[][] mazeArray = new Space[width][height];
 
         try {
             logger.info("**** Reading the maze from file " + this.filepath);
@@ -96,10 +98,10 @@ public class Maze {
                 for (int col = 0; col < line.length(); col++) {
                     if (line.charAt(col) == '#') {
                         logger.info("WALL ");
-                        mazeArray[row][col] = 'w';
+                        mazeArray[row][col] = Space.WALL;
                     } else if (line.charAt(col) == ' ') {
                         logger.info("PASS ");
-                        mazeArray[row][col] = 'p';
+                        mazeArray[row][col] = Space.PASS;
                     }
                 }
                 row++;
