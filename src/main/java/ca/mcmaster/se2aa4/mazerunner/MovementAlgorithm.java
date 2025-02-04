@@ -5,6 +5,10 @@ import org.apache.logging.log4j.Logger;
 
 public interface MovementAlgorithm {
 
-    public abstract char getNextMove(Maze maze, Coordinates coords, MovementPattern direction);
+    /**
+     * Calculates the next move. Moves the coordinates to the next location.
+     * Returns the moves that were made as a path.
+     */
+    public abstract Path getNextMoves(Maze maze, Coordinates coords, MovementPattern direction);
 
 }

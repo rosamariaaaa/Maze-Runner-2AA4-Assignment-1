@@ -43,10 +43,21 @@ public class Path {
     }
 
     /**
-     * Add a direction to the path
+     * Add a single move to the path.
      */
-    public void addStep(char direction) {
-        this.sequence = this.sequence + direction;
+    public void addMove(Move move) {
+        this.sequence = this.sequence + move.getChar();
+        updateCanonical();
+        updateFactorized();
+    }
+
+    /**
+     * Add a moveset to the path
+     */
+    public void addSteps(Path newSteps) {
+        this.sequence = this.sequence + newSteps.getSequence();
+        updateCanonical();
+        updateFactorized();
     }
 
     /**
