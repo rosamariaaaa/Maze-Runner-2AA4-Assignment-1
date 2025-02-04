@@ -30,6 +30,14 @@ public class Traverser {
         return path.getSequence();
     }
 
+    public String getCanonical() {
+        return path.getCanonical();
+    }
+
+    public String getFactorized() {
+        return path.getFactorized();
+    }
+
     public Coordinates getCoordinates() {
         return coordinates;
     }

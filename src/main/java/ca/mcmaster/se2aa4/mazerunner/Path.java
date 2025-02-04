@@ -24,8 +24,7 @@ public class Path {
      */
     public Path(String instructionSequence) {
         this.sequence = instructionSequence;
-        updateCanonical();
-        updateFactorized();
+        updateForms();
     }
 
     /**
@@ -47,8 +46,7 @@ public class Path {
      */
     public void addMove(Move move) {
         this.sequence = this.sequence + move.getChar();
-        updateCanonical();
-        updateFactorized();
+        updateForms();
     }
 
     /**
@@ -56,21 +54,26 @@ public class Path {
      */
     public void addSteps(Path newSteps) {
         this.sequence = this.sequence + newSteps.getSequence();
-        updateCanonical();
-        updateFactorized();
+        updateForms();
     }
 
     /**
-     * Update the canonical form based on the current sequence.
+     * Update the canonical and factorized forms based on the current sequence.
      */
-    private void updateCanonical() {
+    private void updateForms() {
+        canonicalForm = ""; 
+        factorizedForm = "";
 
-    }
-
-    /**
-     * Update the factorized form based on the current sequence.
-     */
-    private void updateFactorized() {
-
+        for (int i = 0; i < sequence.length(); i++) {
+            char current = sequence.charAt(i);
+            int count = 0;
+            while (current == sequence.charAt(i)) {
+                count++;
+                canonicalForm = canonicalForm + current;
+            }
+            factorizedForm = factorizedForm + count + current + " ";
+            canonicalForm = canonicalForm + " ";
+            i = i + count;
+        }
     }
 }

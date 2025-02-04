@@ -29,6 +29,8 @@ public class Main {
         }
         String path = pathfinder.getPath();
         logger.info("Path found: " + path);
+        System.out.println("Factorized path: " + pathfinder.getFactorized());
+        System.out.println("Canonical path: " + pathfinder.getCanonical());
         logger.info("** End of MazeRunner");
     }
 
