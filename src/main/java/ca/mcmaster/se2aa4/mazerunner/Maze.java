@@ -26,7 +26,9 @@ public class Maze {
     public Space getSpace(Coordinates coordinates) {
         int x = coordinates.getX();
         int y = coordinates.getY();
-        return maze[x][y];
+        logger.info("FETCHING SPACE: X: " + x + " Y: " + y);
+        if (maze[y][x] == Space.PASS) logger.info("FOUND PASS");
+        return maze[y][x];
     }
 
     public Coordinates getStart() {
@@ -40,7 +42,7 @@ public class Maze {
 
     public Coordinates getFinish() {
         for (int i = 0; i < width; i++) {
-            if (maze[i][0] == Space.PASS) {
+            if (maze[i][width-1] == Space.PASS) {
                 return new Coordinates(width-1, i);
             }
         }
@@ -80,6 +82,24 @@ public class Maze {
             logger.error("/!\\ An error has occured /!\\");
         }
         return -1;
+    }
+
+    public void printMaze() {
+        System.out.println("======= PRINTING MAZE =======");
+        for (int i = 0; i < width; i ++) {
+            for (int j = 0; j < height; j++) {
+                if (maze[i][j] == Space.PASS) {
+                    System.out.print(" ");
+                }
+                else if (maze[i][j] == Space.WALL) {
+                    System.out.print("#");
+                }
+                else{
+                    System.out.print("?");
+                }
+            }
+            System.out.println();
+        }
     }
 
     /**

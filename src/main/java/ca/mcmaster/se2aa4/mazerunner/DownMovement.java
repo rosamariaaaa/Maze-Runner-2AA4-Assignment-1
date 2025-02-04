@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public class DownMovement implements MovementPattern {
 
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public void moveForward(Coordinates coordinates) {
         coordinates.stepDown();
@@ -12,6 +14,7 @@ public class DownMovement implements MovementPattern {
 
     @Override
     public Coordinates peekForward(Coordinates coordinates) {
+        logger.trace("[DOWN] Peek forward");
         int x = coordinates.getX();
         int y = coordinates.getY() + 1;
         return new Coordinates(x, y);
@@ -19,6 +22,7 @@ public class DownMovement implements MovementPattern {
 
     @Override
     public Coordinates peekRight(Coordinates coordinates) {
+        logger.info("[DOWN] Peek right");
         int x = coordinates.getX()-1;
         int y = coordinates.getY();
         return new Coordinates(x, y);
@@ -26,6 +30,7 @@ public class DownMovement implements MovementPattern {
 
     @Override
     public Coordinates peekLeft(Coordinates coordinates) {
+        logger.info("[DOWN] Peek left");
         int x = coordinates.getX()+1;
         int y = coordinates.getY();
         return new Coordinates(x, y);
@@ -33,6 +38,7 @@ public class DownMovement implements MovementPattern {
 
     @Override
     public Coordinates peekTopRight(Coordinates coordinates) {
+        logger.info("[DOWN] Peek right corner");
         int x = coordinates.getX()-1;
         int y = coordinates.getY()+1;
         return new Coordinates(x, y);
@@ -40,6 +46,7 @@ public class DownMovement implements MovementPattern {
 
     @Override
     public Coordinates peekTopLeft(Coordinates coordinates) {
+        logger.info("[DOWN] Peek left corner");
         int x = coordinates.getX()+1;
         int y = coordinates.getY()+1;
         return new Coordinates(x, y);
