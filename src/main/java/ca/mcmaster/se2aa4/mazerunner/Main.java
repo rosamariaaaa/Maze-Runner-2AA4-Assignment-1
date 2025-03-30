@@ -14,23 +14,27 @@ public class Main {
 
     private Maze maze;
     private Traverser pathfinder;
+    private MovementAlgorithm algorithm = new RightHandAlgorithm();
+    private Options options;
+    private String filepath;
 
+    /**
+     * Initialize main.
+     */
     public Main(String args[]) {
-        Options options = getOptions();
-        String filepath = getMazeFile(options, args);
+        this.options = getOptions();
+        this.filepath = getMazeFile(options, args);
         this.maze = new Maze(filepath);
-        this.pathfinder = new Traverser(maze, maze.getStart(), new RightHandAlgorithm());
+        this.pathfinder = new Traverser(this.algorithm);
     }
 
     public void startMazeRunner() {
         logger.info("**** Computing path");
-        while (!pathfinder.getCoordinates().isEqualTo(maze.getFinish())) {
-            pathfinder.move(maze);
-        }
-        String path = pathfinder.getPath();
+        Path path = pathfinder.getPath(this.maze);
         logger.info("Path found: " + path);
-        System.out.println("Factorized path: " + pathfinder.getFactorized());
-        System.out.println("Canonical path: " + pathfinder.getCanonical());
+
+        System.out.println("Factorized path: " + path.getFactorized());
+        System.out.println("Canonical path: " + path.getCanonical());
         logger.info("** End of MazeRunner");
     }
 

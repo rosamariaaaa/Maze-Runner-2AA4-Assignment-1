@@ -15,12 +15,23 @@ public class Maze {
     private int width;
     private static final Logger logger = LogManager.getLogger();
 
+    /**
+     * Create a new maze
+     */
     public Maze (String filepath) {
         logger.info("Instantiating Maze");
         this.filepath = filepath;
-        this.height = getHeight();
-        this.width = getWidth();
+        this.height = findHeight();
+        this.width = findWidth();
         this.maze = enumerateMaze();
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     public Space getSpace(Coordinates coordinates) {
@@ -52,7 +63,7 @@ public class Maze {
     /**
      * Return the height of the maze
      */
-    public int getHeight() {
+    private int findHeight() {
         try {
             int count = 0;
             BufferedReader reader = new BufferedReader(new FileReader(this.filepath));
@@ -72,7 +83,7 @@ public class Maze {
     /**
      * Return the width of the maze
      */
-    public int getWidth() {
+    private int findWidth() {
         // Read the first line of the maze. Return the length.
         try {
             BufferedReader reader = new BufferedReader(new FileReader(this.filepath));

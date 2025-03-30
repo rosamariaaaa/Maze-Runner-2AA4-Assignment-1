@@ -57,23 +57,32 @@ public class Path {
         updateForms();
     }
 
-    /**
-     * Update the canonical and factorized forms based on the current sequence.
-     */
-    private void updateForms() {
-        canonicalForm = ""; 
-        factorizedForm = "";
+  /**
+	 * Update the canonical and factorized forms based on the current sequence.
+	 */
+	private void updateForms() {
+		canonicalForm = ""; 
+		factorizedForm = "";
 
-        for (int i = 0; i < sequence.length(); i++) {
-            char current = sequence.charAt(i);
-            int count = 0;
-            while (current == sequence.charAt(i)) {
-                count++;
-                canonicalForm = canonicalForm + current;
-            }
-            factorizedForm = factorizedForm + count + current + " ";
-            canonicalForm = canonicalForm + " ";
-            i = i + count;
-        }
-    }
+		for (int i = 0; i < sequence.length(); i++) {
+			char current = sequence.charAt(i);
+			int count = 0; 
+			while (current == sequence.charAt(i)) {
+				count++;
+				i++;
+				canonicalForm = canonicalForm + current;
+				if (i >= sequence.length()) break;
+			}
+			
+			if (count == 1) {
+				factorizedForm = factorizedForm + current + " ";
+			}
+			else {
+				factorizedForm = factorizedForm + count + current + " ";
+			}
+			canonicalForm = canonicalForm + " ";
+			i--;
+		}
+	}
+
 }

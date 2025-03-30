@@ -6,40 +6,45 @@ import org.apache.logging.log4j.Logger;
 public class Traverser {
 
     private static final Logger logger = LogManager.getLogger();
-    private Coordinates coordinates; 
     private Path path;
-    private MovementPattern movement;
     private MovementAlgorithm navigator;
+    private Coordinates coordinates;
+    private Direction direction;
 
-    public Traverser(Maze maze, Coordinates start, MovementAlgorithm algorithm) {
-        logger.info("Traverser instantiated: current coordinates (" + start.getX() + "," + start.getY() + ")"); 
-        this.path = new Path();
-        this.coordinates = start;
-        this.movement = new RightMovement();
+    /**
+     * Create a new Traverser object.
+     */
+    public Traverser(MovementAlgorithm algorithm) {
         this.navigator = algorithm;
     }
 
+    /**
+     * Move one step
+     */
     public void move(Maze maze) {
-        logger.info("Move one step."); 
-        Path move = navigator.getNextMoves(maze, coordinates, movement);
+        Path move = navigator.getNextMoves(maze, coordinates, direction);
+        coordinates = navigator.getNewCoords();
+        direction = navigator.getNewDirection();
         path.addSteps(move);
-        logger.info("Movement Complete: X: " + coordinates.getX() + " Y: " + coordinates.getY()); 
     }
 
-    public String getPath() {
-        return path.getSequence();
-    }
+    /**
+     * Find the path and return it.
+     */
+    public Path getPath(Maze maze) {
+        this.coordinates = maze.getStart();
+        this.direction = new Right();
+        Coordinates finish = maze.getFinish();
 
-    public String getCanonical() {
-        return path.getCanonical();
-    }
+        logger.info("Begin PathFinding: current coordinates (" + coordinates.getX() + "," + coordinates.getY() + ")"); 
+        this.path = new Path();
 
-    public String getFactorized() {
-        return path.getFactorized();
-    }
+        while (!coordinates.isEqualTo(finish)) {
+            logger.info("FETCHING NEXT MOVE: ");
+            move(maze);
+        }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+        return path;
     }
 
 }
