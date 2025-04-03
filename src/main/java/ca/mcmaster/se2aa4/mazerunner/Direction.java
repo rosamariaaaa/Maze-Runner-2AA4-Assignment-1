@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public interface Direction {
 
+    public boolean equals(Direction d);
+
     public Direction getRightTurn();
 
     public Direction getLeftTurn();

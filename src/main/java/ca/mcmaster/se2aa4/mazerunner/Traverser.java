@@ -21,7 +21,7 @@ public class Traverser {
     /**
      * Move one step
      */
-    public void move(Maze maze) {
+    private void move(Maze maze) {
         Path move = navigator.getNextMoves(maze, coordinates, direction);
         coordinates = navigator.getNewCoords();
         direction = navigator.getNewDirection();

@@ -7,6 +7,11 @@ public class Right implements Direction {
 
     private static final Logger logger = LogManager.getLogger();
 
+    @Override 
+    public boolean equals(Direction direction) {
+        return direction instanceof Right;
+    }
+
     @Override
     public Coordinates getForward(Coordinates coordinates) {
         int x = coordinates.getX() + 1;

@@ -4,5 +4,5 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public enum Space {
-    PASS, WALL;
+    PASS, WALL, OUT_OF_RANGE;
 }

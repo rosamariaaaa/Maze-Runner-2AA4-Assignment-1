@@ -15,30 +15,30 @@ public class Path {
         this.factorizedForm = "";
     }
 
-    public String getSequence() {
-        return sequence;
-    }
-
-        /**
+    /**
      * Create a new Path
      */
-    public Path(String instructionSequence) {
-        this.sequence = instructionSequence;
+    public Path(String path) {
+        this.sequence = path;
         updateForms();
+    }
+
+    public String getSequence() {
+        return sequence;
     }
 
     /**
      * Return a string of the path in canonical form. 
      */
     public String getCanonical() {
-        return factorizedForm;
+        return canonicalForm;
     }
 
     /**
      * Return a string of the path in factorized form.
      */
     public String getFactorized() {
-        return canonicalForm;
+        return factorizedForm;
     }
 
     /**

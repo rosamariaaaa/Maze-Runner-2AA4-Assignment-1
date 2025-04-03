@@ -35,11 +35,18 @@ public class Maze {
     }
 
     public Space getSpace(Coordinates coordinates) {
-        int x = coordinates.getX();
-        int y = coordinates.getY();
-        logger.info("FETCHING SPACE: X: " + x + " Y: " + y);
-        if (maze[y][x] == Space.PASS) logger.info("FOUND PASS");
-        return maze[y][x];
+        if (coordinates.isInRange(this)) {
+            int x = coordinates.getX();
+            int y = coordinates.getY();
+            logger.info("FETCHING SPACE: X: " + x + " Y: " + y);
+            if (maze[y][x] == Space.PASS) logger.info("FOUND PASS");
+            return maze[y][x];
+        }
+        else {
+            logger.error("The coordinate you requested is out of range. ");
+            return Space.OUT_OF_RANGE;
+        }
+        
     }
 
     public Coordinates getStart() {

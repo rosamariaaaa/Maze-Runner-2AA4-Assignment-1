@@ -11,7 +11,6 @@ public class RightHandAlgorithm implements MovementAlgorithm {
 
     @Override
     public Path getNextMoves(Maze maze, Coordinates coords, Direction direction) {
-        maze.printMaze();
         newCoords = coords;
         newDirection = direction;
 
