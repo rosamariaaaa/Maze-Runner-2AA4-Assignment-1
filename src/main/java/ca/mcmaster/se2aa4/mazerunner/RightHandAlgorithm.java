@@ -6,105 +6,66 @@ import org.apache.logging.log4j.Logger;
 public class RightHandAlgorithm implements MovementAlgorithm {
 
     private static final Logger logger = LogManager.getLogger();
-    private Coordinates newCoords = new Coordinates(-1,-1);
-    private Direction newDirection = new Right();
+    private MovementCommand command;
+    private MovementCommand left = new TurnLeft();
+    private MovementCommand forward = new MoveForward();
+    private MovementCommand corner = new TurnCorner();
 
-    @Override
-    public Path getNextMoves(Maze maze, Coordinates coords, Direction direction) {
-        newCoords = coords;
-        newDirection = direction;
+    private Coordinates coordinates = new Coordinates(-1,-1);
+    private Compass compass;
 
-        Path nextMoves = new Path();
-
-        try {
-            if (!isHoldingRightWall(maze, coords, direction)) {
-                throw new Exception("Not holding a wall.");
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-
-        if (isAtCorner(maze, coords, direction)) {
-            logger.info("Turn a corner");
-            turnCorner(coords, direction);
-            nextMoves.addMove(Move.FORWARD);
-            nextMoves.addMove(Move.RIGHT);
-            nextMoves.addMove(Move.FORWARD);
-        }
-        else if (canMoveForward(maze, coords, direction)) {
-            logger.info("Move forward");
-            moveForward(coords, direction);
-            nextMoves.addMove(Move.FORWARD);
-        }
-        else {
-            logger.info("Turn left");
-            turnLeft(direction);
-            nextMoves.addMove(Move.LEFT);
-        }
-
-        return nextMoves;
+    public RightHandAlgorithm(Direction start) {
+        this.compass = new DirectionManager(start);
     }
 
-    /**
-     * Returns the coordinates a player is located at after a movement is called.
-     */
+    public RightHandAlgorithm() {
+        this.compass = new DirectionManager(new Right());
+    }
+
     @Override
+    public Path getNextMoves(Maze maze, Coordinates coords) {
+        this.coordinates = coords;
+        checkHoldingRightWall(maze, coords);
+
+        if (isAtCorner(maze, coords))
+            command = corner;
+        else if (canMoveForward(maze, coords))
+            command = forward;
+        else
+            command = left;
+
+        command.execute(coords, compass);
+        return command.getPath();
+    }
+
     public Coordinates getNewCoords() {
-        return newCoords;
-    }
-
-    /**
-     * Returns the direction the player should now be facing after a movement is called.
-     */
-    @Override
-    public Direction getNewDirection() {
-        return newDirection;
-    }
-
-    /**
-     * Set coordinates and direction for LEFT action.
-     */
-    private void turnLeft(Direction direction) {
-        newDirection = direction.getLeftTurn();
-    }
-
-    /**
-     * Set coordinates and direction for RIGHT action.
-     */
-    private void turnCorner(Coordinates coords, Direction direction) {
-        Coordinates forward = direction.getForward(coords);
-        Coordinates corner = direction.getRightTurn().getForward(forward);
-
-        newCoords = corner; 
-
-        newDirection = direction.getRightTurn();
-    }
-
-    /**
-     * Set coordinates and direction for FORWARD action.
-     */
-    private void moveForward(Coordinates coords, Direction direction) {
-        newCoords = direction.getForward(coords);
+        return coordinates;
     }
 
     /**
      * Return true if there is a wall to the traverser's right.
      */
-    private boolean isHoldingRightWall(Maze maze, Coordinates coords, Direction direction) {
+    private void checkHoldingRightWall(Maze maze, Coordinates coords) {
+        Direction direction = compass.getDirection();
         Coordinates right = direction.getRightTurn().getForward(coords);
-        if (right.isInRange(maze)) {
-            if (maze.getSpace(right) == Space.WALL) {
-                return true;
+        try {
+            if (right.isInRange(maze)) {
+                if (maze.getSpace(right) != Space.WALL) {
+                    throw new Exception("Not holding a wall.");
+                }
             }
         }
-        return false;
+        catch (Exception e) {
+            logger.error(e.getMessage());
+        }
     }
 
     /**
      * Return true if traverser is at a corner.
      */
-    private boolean isAtCorner(Maze maze, Coordinates coords, Direction direction) {
+    private boolean isAtCorner(Maze maze, Coordinates coords) {
         logger.info("Checking if at a corner");
+        Direction direction = compass.getDirection();
 
         Coordinates forward = direction.getForward(coords);
         Coordinates corner = direction.getRightTurn().getForward(forward);
@@ -136,8 +97,9 @@ public class RightHandAlgorithm implements MovementAlgorithm {
      *  - Forward space is free.
      *  - The player will still be holding a wall
      */
-    private boolean canMoveForward(Maze maze, Coordinates coords, Direction direction) {
+    private boolean canMoveForward(Maze maze, Coordinates coords) {
         logger.info("Checking if forward clear");
+        Direction direction = compass.getDirection();
 
         Coordinates forward = direction.getForward(coords);
         Coordinates corner = direction.getRightTurn().getForward(forward);

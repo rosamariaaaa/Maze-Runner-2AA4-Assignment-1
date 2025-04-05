@@ -12,7 +12,6 @@ public class RightHandAlgorithmTest {
     private Maze small_maze = new Maze(small_maze_file);
     private MovementAlgorithm algorithm = new RightHandAlgorithm();
     private Coordinates coords;
-    private Direction direction;
 
     public static final Direction UP = new Up();
     public static final Direction DOWN = new Down();
@@ -20,9 +19,8 @@ public class RightHandAlgorithmTest {
 
 
     private void takeStep() {
-        algorithm.getNextMoves(small_maze, coords, direction); 
+        algorithm.getNextMoves(small_maze, coords); 
         this.coords = algorithm.getNewCoords();
-        this.direction = algorithm.getNewDirection();
     }
 
     /**
@@ -30,11 +28,10 @@ public class RightHandAlgorithmTest {
      */
     @Test
     public void testForwardCase() {
-        this.direction = new Up();
+        this.algorithm = new RightHandAlgorithm(new Up());
         this.coords = new Coordinates(1,5);
         takeStep();
         assertTrue(coords.isEqualTo(new Coordinates(1,4)));
-        assertTrue(direction.equals(UP));
     }
 
     /**
@@ -42,11 +39,10 @@ public class RightHandAlgorithmTest {
      */
     @Test
     public void testLeftCase() {
-        this.direction = new Left();
+        this.algorithm = new RightHandAlgorithm(new Left());
         this.coords = new Coordinates(1,1);
         takeStep();
         assertTrue(coords.isEqualTo(new Coordinates(1,1)));
-        assertTrue(direction.equals(DOWN));
     }
 
     /**
@@ -54,10 +50,9 @@ public class RightHandAlgorithmTest {
      */
     @Test
     public void testCornerCase() {
-        this.direction = new Up();
+        this.algorithm = new RightHandAlgorithm(new Up());
         this.coords = new Coordinates(3,6);
         takeStep();
         assertTrue(coords.isEqualTo(new Coordinates(4,5)));
-        assertTrue(direction.equals(RIGHT));
         }
 }

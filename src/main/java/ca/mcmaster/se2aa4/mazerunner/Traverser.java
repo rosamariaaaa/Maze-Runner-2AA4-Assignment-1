@@ -9,7 +9,6 @@ public class Traverser {
     private Path path;
     private MovementAlgorithm navigator;
     private Coordinates coordinates;
-    private Direction direction;
 
     /**
      * Create a new Traverser object.
@@ -22,9 +21,8 @@ public class Traverser {
      * Move one step
      */
     private void move(Maze maze) {
-        Path move = navigator.getNextMoves(maze, coordinates, direction);
+        Path move = navigator.getNextMoves(maze, coordinates);
         coordinates = navigator.getNewCoords();
-        direction = navigator.getNewDirection();
         path.addSteps(move);
     }
 
@@ -33,7 +31,6 @@ public class Traverser {
      */
     public Path getPath(Maze maze) {
         this.coordinates = maze.getStart();
-        this.direction = new Right();
         Coordinates finish = maze.getFinish();
 
         logger.info("Begin PathFinding: current coordinates (" + coordinates.getX() + "," + coordinates.getY() + ")"); 

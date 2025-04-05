@@ -25,18 +25,18 @@ public class PathTest {
     }
 
     @Test 
-    public void testAddMove() {
-        case1.addMove(Move.LEFT);
-        case2.addMove(Move.RIGHT);
-        case3.addMove(Move.FORWARD);
-        case4.addMove(Move.RIGHT);
-        case5.addMove(Move.LEFT);
+    public void testAddSteps() {
+        case1.addSteps(new Path("L"));
+        case2.addSteps(new Path("R"));
+        case3.addSteps(new Path("F"));
+        case4.addSteps(new Path("FRF"));
+        case5.addSteps(new Path("LLL"));
 
         assertEquals(case1.getSequence(), "FFFLLFFRFFFLLFFFRFFLLL");
         assertEquals(case2.getSequence(), "R");
         assertEquals(case3.getSequence(), "LFFFRFFLLF");
-        assertEquals(case4.getSequence(), "FFFFFFFFLFFFFFFFFRFR");
-        assertEquals(case5.getSequence(), "FRFFRFFL");
+        assertEquals(case4.getSequence(), "FFFFFFFFLFFFFFFFFRFFRF");
+        assertEquals(case5.getSequence(), "FRFFRFFLLL");
     }
 
     @Test

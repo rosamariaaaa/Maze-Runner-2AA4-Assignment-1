@@ -47,7 +47,7 @@ public class MazeTest {
     }
 
     @Test
-    public void testFindFinish() {
+    public void testGetFinish() {
         Coordinates smallFinish = new Coordinates(10,5);
         Coordinates mediumFinish = new Coordinates(30,27);
         Coordinates largeFinish = new Coordinates(50,25); 

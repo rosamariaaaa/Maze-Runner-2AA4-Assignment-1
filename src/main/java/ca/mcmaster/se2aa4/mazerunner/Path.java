@@ -40,15 +40,7 @@ public class Path {
     public String getFactorized() {
         return factorizedForm;
     }
-
-    /**
-     * Add a single move to the path.
-     */
-    public void addMove(Move move) {
-        this.sequence = this.sequence + move.getChar();
-        updateForms();
-    }
-
+    
     /**
      * Add a moveset to the path
      */
