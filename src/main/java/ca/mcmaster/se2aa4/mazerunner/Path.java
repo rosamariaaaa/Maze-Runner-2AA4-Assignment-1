@@ -1,5 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+/**
+ * Store a path
+ */
 public class Path {
 
     String sequence;
@@ -40,7 +43,7 @@ public class Path {
     public String getFactorized() {
         return factorizedForm;
     }
-    
+
     /**
      * Add a moveset to the path
      */

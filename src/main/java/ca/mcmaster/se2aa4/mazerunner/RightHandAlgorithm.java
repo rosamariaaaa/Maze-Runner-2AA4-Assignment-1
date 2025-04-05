@@ -3,9 +3,14 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Responsible for determining the next move in path traversal!
+ */
 public class RightHandAlgorithm implements MovementAlgorithm {
 
     private static final Logger logger = LogManager.getLogger();
+
+    // POSSIBLE COMMANDS!
     private MovementCommand command;
     private MovementCommand left = new TurnLeft();
     private MovementCommand forward = new MoveForward();
@@ -22,6 +27,9 @@ public class RightHandAlgorithm implements MovementAlgorithm {
         this.compass = new DirectionManager(new Right());
     }
 
+    /**
+     * Determine the next move and execute its command.
+     */
     @Override
     public Path getNextMoves(Maze maze, Coordinates coords) {
         this.coordinates = coords;

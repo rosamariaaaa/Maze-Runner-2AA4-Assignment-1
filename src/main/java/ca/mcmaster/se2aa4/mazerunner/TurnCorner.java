@@ -1,5 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+/**
+ * Turn corner Command
+ */
 public class TurnCorner implements MovementCommand {
 
     public static final Path path = new Path("FRF");
